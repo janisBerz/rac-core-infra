@@ -73,7 +73,7 @@ stages:
     pool:
       vmImage: 'windows-2019'
     environment: 'dev'
-    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
+    #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
     strategy:
       runOnce:
         deploy:
