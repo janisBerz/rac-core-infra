@@ -1,0 +1,3 @@
+# ARM template variables
+variables:
+  favoriteVeggie: 'brussels sprouts'
