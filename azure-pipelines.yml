@@ -51,6 +51,7 @@ stages:
         command: publish
         arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
         projects: '**/*Function.csproj'
+        publishWebProjects: false
         zipAfterPublish: false
 
     # - task: DotNetCoreCLI@2
