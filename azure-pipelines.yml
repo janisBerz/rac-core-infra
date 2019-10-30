@@ -5,17 +5,16 @@
 
 variables:
   buildConfiguration: 'Release'
-  #webAppDirectory: 'DotNetWebApp/task-1-webapp'
-  #webAppName: jb-webapp-$(Environment.Name)
-  #projects:
-  #azureSubscriptionName: 'DevTest'
-  #resourceGroupName: $(WebAppName)
-  #resourcename: $(resourceGroupName)
   poolImageName: 'windows-latest'
-  #armTemplateParameters: -webAppName $(webAppName)
   System.Debug: 'false'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
+  projectName: 'rac-voting-demo'
+  webAppName: '$(projectName)-$(Environment.Name)'
+  azureSubscriptionName: 'DevTest'
+  resourceGroupName: '$(WebAppName)'
+  resourcename: '$(resourceGroupName)'
+  armTemplateParameters: '-webAppName $(webAppName)'
 
 stages:
 - stage: Build
@@ -54,40 +53,32 @@ stages:
         publishWebProjects: false
         zipAfterPublish: false
 
-    # - task: DotNetCoreCLI@2
-    #   displayName: 'DotNet Core custom Publish Function App'
-    #   inputs:
-    #     command: 'custom'
-    #     projects: '**/**/function.csproj'
-    #     custom: 'publish'
-    #     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
-
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Web App'
       inputs:
         path: $(build.artifactstagingdirectory)
         artifact: App
 
-    # - task: PublishPipelineArtifact@1
-    #   displayName: 'Publish ARM templates'
-    #   inputs:
-    #     path: $(System.DefaultWorkingDirectory)/templates
-    #     artifact: templates
+    - task: PublishPipelineArtifact@1
+      displayName: 'Publish ARM templates'
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/templates
+        artifact: templates
 
 
-# - stage: Deployment_Dev
-#   jobs:
-#   - deployment: deployment_dev
-#     displayName: 'Dev'
-#     pool:
-#       vmImage: 'windows-2019'
-#     environment: 'dev'
-#     condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - template: deployment.yml
+- stage: Deployment_Dev
+  jobs:
+  - deployment: deployment_dev
+    displayName: 'Dev'
+    pool:
+      vmImage: 'windows-2019'
+    environment: 'dev'
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: deployment.yml
 
 # - stage: Deployment_Test
 #   jobs:

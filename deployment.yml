@@ -1,0 +1,35 @@
+steps:
+  - task: DownloadPipelineArtifact@2
+
+  - task: AzureResourceGroupDeployment@2
+    displayName: 'Provision Infrastructure'
+    inputs:
+      azureSubscription: $(azureSubscriptionName)
+      resourceGroupName: $(resourceGroupName)
+      location: 'West Europe'
+      csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
+      csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+      overrideParameters: '$(armTemplateParameters)'
+
+  # - task: keesschollaart.arm-outputs.arm-outputs.ARM Outputs@5
+  #   displayName: 'ARM Outputs'
+  #   inputs:
+  #     ConnectedServiceNameARM: $(azureSubscriptionName)
+  #     resourceGroupName: $(resourceGroupName)
+
+  # - task: AzurePowerShell@4
+  #   inputs:
+  #     azureSubscription: $(azureSubscriptionName)
+  #     scriptType: 'inlineScript'
+  #     inline: |
+  #       $connectionStrings = @{callbackUrl = @{Name='callbackUrl';Value='$(callbackUrl)';type='Custom'}}
+  #       Set-AzWebApp -ResourceGroupName $(resourceGroupName) -Name $(WebAppName) -ConnectionStrings $connectionStrings
+  #     azurePowerShellVersion: 'latestVersion' # Optional. Options: latestVersion, otherVersion
+
+  - task: AzureRmWebAppDeployment@4
+    displayName: 'Azure App Service Deploy'
+    inputs:
+      appType: webApp
+      ConnectedServiceName: $(azureSubscriptionName)
+      WebAppName: $(WebAppName)
+      package: $(Pipeline.Workspace)/app/*.zip

@@ -29,10 +29,10 @@
     }
   },
   "variables": {
-    "functionAppName": "[concat(parameters('appName'), '-function')]",
+    "functionAppName": "[concat(parameters('appName'))]",
     "hostingPlanName": "[parameters('appName')]",
     "appInsighstName": "[parameters('appName')]",
-    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'functions')]"
+    "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },
   "resources": [
     {
@@ -90,7 +90,6 @@
           ],
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
-            "AzureWebJobsDashboard": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "FUNCTIONS_EXTENSION_VERSION": "~2",
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('appInsighstName')), '2015-05-01').InstrumentationKey]"
           }
