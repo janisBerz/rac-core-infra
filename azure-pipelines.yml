@@ -43,7 +43,7 @@ stages:
         command: publish
         arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
         projects: '**/*.sln'
-        zipAfterPublish: false
+        zipAfterPublish: true
 
     - task: DotNetCoreCLI@2
       displayName: 'DotNet Core Publish Function'
