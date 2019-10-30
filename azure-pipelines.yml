@@ -3,32 +3,93 @@
 # Add steps that publish symbols, save build artifacts, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
 
-trigger:
-- master
-
-pool:
-  vmImage: 'windows-latest'
-
 variables:
+  buildConfiguration: 'Release'
+  #webAppDirectory: 'DotNetWebApp/task-1-webapp'
+  #webAppName: jb-webapp-$(Environment.Name)
+  #projects:
+  #azureSubscriptionName: 'DevTest'
+  #resourceGroupName: $(WebAppName)
+  #resourcename: $(resourceGroupName)
+  poolImageName: 'windows-latest'
+  #armTemplateParameters: -webAppName $(webAppName)
+  System.Debug: 'false'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
 
-steps:
-- task: NuGetToolInstaller@1
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool:
+      vmImage: '$(poolImageName)'
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: 'DotNet Core Restore'
+      inputs:
+        command: restore
+        projects: '**/*.sln'
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+    - task: DotNetCoreCLI@2
+      displayName: 'DotNet Core Build'
+      inputs:
+        command: build
+        projects: '**/*.sln'
+        arguments: '--configuration $(buildConfiguration) --no-restore'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: DotNetCoreCLI@2
+      displayName: 'DotNet Core Publish WebApp'
+      inputs:
+        command: publish
+        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
+        projects: '**/*.sln'
+        zipAfterPublish: true
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'DotNet Core custom Publish Function App'
+    #   inputs:
+    #     command: 'custom'
+    #     projects: '**/**/function.csproj'
+    #     custom: 'publish'
+    #     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        path: $(build.artifactstagingdirectory)
+        artifact: App
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/templates
+        artifact: templates
+
+
+
+
+
+
+
+# trigger:
+# - master
+
+# pool:
+#   vmImage: '$(poolImageName)'
+
+# steps:
+# - task: NuGetToolInstaller@1
+
+# - task: NuGetCommand@2
+#   inputs:
+#     restoreSolution: '$(solution)'
+
+# - task: VSBuild@1
+#   inputs:
+#     solution: '$(solution)'
+#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
+
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
