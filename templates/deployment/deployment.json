@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "webAppName": {
+            "type": "string",
+            "defaultValue": "someSuperWebApp"
+        }
+    },
+    "variables": {
+        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/DotNetWebApp/master/templates",
+        "appServicePlanName": "[parameters('webAppName')]"
+    },
+    "resources": [
+        {
+            "name": "azureAppServicePlan",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/azureAppServicePlan/azureAppServicePlan.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "webApp",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "azureAppServicePlan",
+                "azureFunction"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/webApp/webApp.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "webAppName": {
+                        "value": "[parameters('webAppName')]"
+                    },
+                    "callbackUrl":{
+                        "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "azureFunction",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "azureAppServicePlan"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/azureFunction/azureFunction.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appName": {
+                        "value": "[parameters('webAppName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "sendEmailLogicApp",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/sendEmailLogicApp/sendEmailLogicApp.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workflowsName": {
+                        "value": "[parameters('webAppName')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
