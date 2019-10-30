@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3A8B82CC-9C63-44E5-A550-C92F341E013D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingFunction", "src\VotingFunction\VotingFunction.csproj", "{8FB491CF-9535-4DF4-972D-4FA75BDD614A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingWeb", "src\VotingWeb\VotingWeb.csproj", "{6C1606A3-17B5-45A9-BC37-7205E0CCC705}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -14,5 +20,35 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Debug|x64.Build.0 = Debug|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Debug|x86.Build.0 = Debug|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Release|x64.ActiveCfg = Release|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Release|x64.Build.0 = Release|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Release|x86.ActiveCfg = Release|Any CPU
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A}.Release|x86.Build.0 = Release|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Debug|x64.Build.0 = Debug|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Debug|x86.Build.0 = Debug|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Release|x64.ActiveCfg = Release|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Release|x64.Build.0 = Release|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Release|x86.ActiveCfg = Release|Any CPU
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FB491CF-9535-4DF4-972D-4FA75BDD614A} = {3A8B82CC-9C63-44E5-A550-C92F341E013D}
+		{6C1606A3-17B5-45A9-BC37-7205E0CCC705} = {3A8B82CC-9C63-44E5-A550-C92F341E013D}
 	EndGlobalSection
 EndGlobal
