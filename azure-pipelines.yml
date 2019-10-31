@@ -51,7 +51,7 @@ stages:
         arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
         projects: '**/*Function.csproj'
         publishWebProjects: false
-        zipAfterPublish: false
+        zipAfterPublish: true
 
     - task: PublishPipelineArtifact@1
       displayName: 'Publish Web App'
