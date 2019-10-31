@@ -10,7 +10,7 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   projectName: 'rac-voting-demo'
-  webAppName: '$(projectName)-$(Environment.Name)'
+  webAppName: '$(projectName)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: '$(WebAppName)'
   resourcename: '$(resourceGroupName)'
