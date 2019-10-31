@@ -14,7 +14,7 @@ variables:
   azureSubscriptionName: 'DevTest'
   resourceGroupName: '$(WebAppName)'
   resourcename: '$(resourceGroupName)'
-  armTemplateParameters: '-webAppName $(webAppName)'
+  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name)'
 
 stages:
 - stage: Build
