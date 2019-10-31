@@ -25,4 +25,4 @@ steps:
       appType: functionApp
       ConnectedServiceName: $(azureSubscriptionName)
       WebAppName: '$(WebAppName)-$(Environment.Name)'
-      package: $(Pipeline.Workspace)/app/*Function
+      package: $(Pipeline.Workspace)/app/*Function.zip
