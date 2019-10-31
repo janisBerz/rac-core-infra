@@ -29,7 +29,7 @@
     }
   },
   "variables": {
-    "functionAppName": "[concat(parameters('appName'))]",
+    "functionAppName": "[concat(parameters('appName'), '-func')]",
     "hostingPlanName": "[parameters('appName')]",
     "appInsighstName": "[parameters('appName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
