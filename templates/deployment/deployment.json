@@ -5,7 +5,12 @@
         "webAppName": {
             "type": "string",
             "defaultValue": "someSuperWebApp"
+        },
+        "azFunctionName": {
+            "type": "string",
+            "defaultValue": "someSuperWebApp"
         }
+        
     },
     "variables": {
         "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-voting-demo/master/templates",
@@ -68,7 +73,7 @@
                 },
                 "parameters": {
                     "appName": {
-                        "value": "[parameters('webAppName')]"
+                        "value": "[parameters('azFunctionName')]"
                     }
                 }
             }

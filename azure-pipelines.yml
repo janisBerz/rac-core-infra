@@ -11,10 +11,11 @@ variables:
   buildPlatform: 'Any CPU'
   projectName: 'rac-voting-demo'
   webAppName: '$(projectName)'
+  azFunctionName: '$(projectName)-func-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: '$(WebAppName)'
   resourcename: '$(resourceGroupName)'
-  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name)'
+  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name) -functionName $(azFunctionName)'
 
 stages:
 - stage: Build
