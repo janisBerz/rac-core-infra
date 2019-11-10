@@ -30,8 +30,8 @@ stages:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
         location: 'West Europe'
-        csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-        csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+        csmFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.json
+        csmParametersFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.parameters.json
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
