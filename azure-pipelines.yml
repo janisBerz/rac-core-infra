@@ -28,7 +28,7 @@ stages:
       displayName: 'Provision Infrastructure'
       inputs:
         azureSubscription: $(azureSubscriptionName)
-        resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
+        resourceGroupName: '$(resourceGroupName)'
         location: 'West Europe'
         csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
         csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
