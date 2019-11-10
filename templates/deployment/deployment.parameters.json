@@ -5,7 +5,7 @@
         "webAppName": {
             "value": "core-infra-dev"
         },
-        "appInsightsName": {
+        "azFunctionName": {
             "value": "core-infra-dev"
         }
     }
