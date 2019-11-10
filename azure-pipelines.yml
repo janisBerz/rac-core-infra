@@ -24,6 +24,17 @@ stages:
     pool:
       vmImage: '$(poolImageName)'
     steps:
+    - task: AzureResourceGroupDeployment@2
+      displayName: 'Provision Infrastructure'
+      inputs:
+        azureSubscription: $(azureSubscriptionName)
+        resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
+        location: 'West Europe'
+        csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
+        csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+        overrideParameters: '$(armTemplateParameters)'
+        deploymentMode: 'Validation'
+
     - task: DotNetCoreCLI@2
       displayName: 'DotNet Core Restore'
       inputs:
