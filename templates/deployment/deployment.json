@@ -52,7 +52,7 @@
                     "webAppName": {
                         "value": "[parameters('webAppName')]"
                     },
-                    "callbackUrl":{
+                    "callbackUrl": {
                         "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
                     }
                 }
@@ -77,6 +77,9 @@
                     },
                     "appInsightsName": {
                         "value": "[parameters('webAppName')]"
+                    },
+                    "hostingPlanName": {
+                        "value": "[parameters('webAppName')]"
                     }
                 }
             }
@@ -85,7 +88,8 @@
             "name": "sendEmailLogicApp",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
-            "dependsOn": [],
+            "dependsOn": [
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

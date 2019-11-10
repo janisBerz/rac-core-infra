@@ -11,6 +11,9 @@
     "appInsightsName": {
       "type": "string"
     },
+    "hostingPlanName": {
+      "type": "string"
+    },
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -33,7 +36,7 @@
   },
   "variables": {
     "functionAppName": "[concat(parameters('appName'))]",
-    "hostingPlanName": "[parameters('appName')]",
+    "hostingPlanName": "[parameters('hostingPlanName')]",
     "appInsightsName": "[parameters('appInsightsName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },

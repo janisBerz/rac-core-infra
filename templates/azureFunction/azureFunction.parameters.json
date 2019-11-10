@@ -7,6 +7,9 @@
       },
       "appInsightsName": {
         "value": "jb-function"
+      },
+      "hostingPlanName": {
+        "value": "jb-function"
       }
     }
   }
