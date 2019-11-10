@@ -4,6 +4,9 @@
     "parameters": {
         "webAppName": {
             "value": "core-infra-dev"
+        },
+        "appInsightsName": {
+            "value": "core-infra-dev"
         }
     }
 }
