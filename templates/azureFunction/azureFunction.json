@@ -11,6 +11,9 @@
     "appInsightsInstrumentationKey": {
       "type": "string"
     },
+    "appServicePlanName": {
+      "type": "string"
+    },
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -33,7 +36,7 @@
   },
   "variables": {
     "functionAppName": "[concat(parameters('appName'))]",
-    "hostingPlanName": "[parameters('appName')]",
+    "appServicePlanName": "[parameters('appServicePlanName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },
   "resources": [
@@ -55,7 +58,7 @@
       "kind": "functionapp",
       "properties": {
         "name": "[variables('functionAppName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "hostingEnvironment": "",
         "clientAffinityEnabled": false,
         "siteConfig": {

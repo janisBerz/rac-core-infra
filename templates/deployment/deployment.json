@@ -2,6 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "coreInfrastructureName": {
+            "type": "string",
+            "defaultValue": "someSuperWebApp"
+        },
         "webAppName": {
             "type": "string",
             "defaultValue": "someSuperWebApp"
@@ -13,7 +17,7 @@
     },
     "variables": {
         "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/cleanup/templates",
-        "appServicePlanName": "[parameters('webAppName')]"
+        "appServicePlanName": "[parameters('coreInfrastructureName')]"
     },
     "resources": [
         {
@@ -67,6 +71,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
                     "webAppName": {
                         "value": "[parameters('webAppName')]"
                     },
@@ -94,6 +101,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
                     "appName": {
                         "value": "[parameters('azFunctionName')]"
                     },

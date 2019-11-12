@@ -4,13 +4,12 @@ variables:
   System.Debug: 'false'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  projectName: 'rac-core-infra-demo'
-  webAppName: '$(projectName)'
+  coreInfrastructureName: 'rac-core-infra-demo'
+  webAppName: 'rac-fileupload-web-$(Environment.Name)'
   azFunctionName: 'rac-fileinflate-func-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
-  resourceGroupName: '$(WebAppName)'
-  resourcename: '$(resourceGroupName)'
-  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name) -azFunctionName $(azFunctionName)'
+  resourceGroupName: 'rac-demo-app'
+  armTemplateParameters: '-coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName)'
 
 stages:
 - stage: Build
