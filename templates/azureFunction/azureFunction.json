@@ -89,7 +89,7 @@
   ],
   "outputs": {
     "storageAccountConnectionString": {
-      "type": "securestring",
+      "type": "string",
       "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]"
     }
   }

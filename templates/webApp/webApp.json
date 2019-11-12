@@ -21,7 +21,7 @@
       }
     },
     "appInsightsInstrumentationKey": {
-      "type": "string",
+      "type": "securestring",
       "defaultValue": "someSecretValue"
     },
     "storageAccountConnectionString": {
@@ -38,7 +38,7 @@
   },
   "resources": [
     {
-      "apiVersion": "2019-08-01",
+      "apiVersion": "2018-11-01",
       "type": "Microsoft.Web/sites",
       "kind": "app",
       "name": "[variables('webAppPortalName')]",
@@ -47,7 +47,10 @@
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
           "appSettings": [
-
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[parameters('appInsightsInstrumentationKey')]"
+            }
           ],
           "connectionStrings": [
             {
