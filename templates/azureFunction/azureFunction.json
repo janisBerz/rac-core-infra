@@ -8,7 +8,7 @@
         "description": "The name of the function app that you wish to create."
       }
     },
-    "appInsighstName": {
+    "appInsightsName": {
       "type": "string"
     },
     "storageAccountType": {
@@ -39,7 +39,7 @@
   },
   "resources": [
     {
-      "name": "[parameters('appInsighstName')]",
+      "name": "[parameters('appInsightsName')]",
       "type": "Microsoft.Insights/components",
       "apiVersion": "2015-05-01",
       "location": "[parameters('location')]",
