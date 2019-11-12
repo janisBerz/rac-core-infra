@@ -4,7 +4,7 @@
     "parameters": {
         "emailRecipients": {
             "type": "string",
-            "defaultValue": "janis.berzins@visma.com"
+            "defaultValue": "janis.berzins@hotmail.co.uk"
 
         },
         "workflowsName": {
