@@ -55,7 +55,7 @@
                 },
                 "parameters": {
                     "appInsightsName": {
-                        "value": "[parameters('webAppName')]"
+                        "value": "[parameters('coreInfrastructureName')]"
                     }
                 }
             }
