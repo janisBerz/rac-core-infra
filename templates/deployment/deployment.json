@@ -48,9 +48,6 @@
                 "parameters": {
                     "appInsightsName": {
                         "value": "[parameters('webAppName')]"
-                    },
-                    "callbackUrl": {
-                        "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
                     }
                 }
             }
