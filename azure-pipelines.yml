@@ -6,7 +6,7 @@ variables:
   buildPlatform: 'Any CPU'
   projectName: 'rac-core-infra-demo'
   webAppName: '$(projectName)'
-  azFunctionName: '$(projectName)-func-$(Environment.Name)'
+  azFunctionName: 'rac-fileinflate-func-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: '$(WebAppName)'
   resourcename: '$(resourceGroupName)'
