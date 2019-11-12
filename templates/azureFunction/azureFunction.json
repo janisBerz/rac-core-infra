@@ -14,6 +14,10 @@
     "appServicePlanName": {
       "type": "string"
     },
+    "containerName": {
+      "type": "string",
+      "defaultValue": "archived"
+    },
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -45,10 +49,23 @@
       "name": "[variables('storageAccountName')]",
       "apiVersion": "2018-02-01",
       "location": "[parameters('location')]",
-      "kind": "Storage",
+      "kind": "StorageV2",
       "sku": {
         "name": "[parameters('storageAccountType')]"
-      }
+      },
+      "properties": {
+        "accessTier": "Hot"
+      },
+      "resources": [
+        {
+          "name": "[concat('default/', parameters('containerName'))]",
+          "type": "blobServices/containers",
+          "apiVersion": "2018-07-01",
+          "dependsOn": [
+            "[variables('storageAccountName')]"
+          ]
+        }
+      ]
     },
     {
       "apiVersion": "2016-08-01",
