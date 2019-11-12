@@ -60,6 +60,8 @@
             "name": "[parameters('workflowsName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
+                "[resourceId('Microsoft.Web/connections', parameters('workflowsName'))]",
+                "[resourceId('Microsoft.Web/connections', parameters('workflowsName'))]"
             ],
             "properties": {
                 "state": "Enabled",
@@ -141,12 +143,12 @@
                         "value": {
                             "azureblob": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', parameters('workflowsName'))]",
-                                "connectionName": "[parameters('workflowsName')]",
+                                "connectionName": "azureblob",
                                 "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/azureblob')]"
                             },
                             "outlook": {
                                 "connectionId": "[resourceId('Microsoft.Web/connections', parameters('workflowsName'))]",
-                                "connectionName": "[parameters('workflowsName')]",
+                                "connectionName": "outlook",
                                 "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/outlook')]"
                             }
                         }
