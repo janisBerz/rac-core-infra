@@ -4,6 +4,9 @@
     "parameters": {
         "webAppName": {
             "value": "core-infra-dev"
+        },
+        "azFunctionName": {
+            "value": "core-infra-dev"
         }
     }
 }

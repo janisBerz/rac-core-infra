@@ -11,10 +11,11 @@ variables:
   buildPlatform: 'Any CPU'
   projectName: 'rac-voting-demo'
   webAppName: '$(projectName)'
+  azFunctionName: '$(projectName)-func-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: '$(WebAppName)'
   resourcename: '$(resourceGroupName)'
-  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name)'
+  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name) -azFunctionName $(azFunctionName)'
 
 stages:
 - stage: Build
@@ -23,6 +24,17 @@ stages:
     pool:
       vmImage: '$(poolImageName)'
     steps:
+    - task: AzureResourceGroupDeployment@2
+      displayName: 'Provision Infrastructure'
+      inputs:
+        azureSubscription: $(azureSubscriptionName)
+        resourceGroupName: '$(resourceGroupName)'
+        location: 'West Europe'
+        csmFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.json
+        csmParametersFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.parameters.json
+        overrideParameters: '$(armTemplateParameters)'
+        deploymentMode: 'Validation'
+
     - task: DotNetCoreCLI@2
       displayName: 'DotNet Core Restore'
       inputs:

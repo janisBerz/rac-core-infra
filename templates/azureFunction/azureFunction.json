@@ -8,6 +8,12 @@
         "description": "The name of the function app that you wish to create."
       }
     },
+    "appInsightsName": {
+      "type": "string"
+    },
+    "hostingPlanName": {
+      "type": "string"
+    },
     "storageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -30,13 +36,13 @@
   },
   "variables": {
     "functionAppName": "[concat(parameters('appName'))]",
-    "hostingPlanName": "[parameters('appName')]",
-    "appInsighstName": "[parameters('appName')]",
+    "hostingPlanName": "[parameters('hostingPlanName')]",
+    "appInsightsName": "[parameters('appInsightsName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },
   "resources": [
     {
-      "name": "[variables('appInsighstName')]",
+      "name": "[variables('appInsightsName')]",
       "type": "Microsoft.Insights/components",
       "apiVersion": "2015-05-01",
       "location": "[parameters('location')]",
@@ -76,8 +82,7 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Insights/components', variables('appInsighstName'))]"
-
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
       ],
       "resources": [
         {
@@ -91,7 +96,7 @@
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "FUNCTIONS_EXTENSION_VERSION": "~2",
-            "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('appInsighstName')), '2015-05-01').InstrumentationKey]"
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
           }
         }
       ]

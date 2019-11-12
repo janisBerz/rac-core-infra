@@ -4,6 +4,12 @@
     "parameters": {
       "appName": {
         "value": "jb-function"
+      },
+      "appInsightsName": {
+        "value": "jb-function"
+      },
+      "hostingPlanName": {
+        "value": "jb-function"
       }
     }
   }

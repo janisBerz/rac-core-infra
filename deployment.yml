@@ -12,17 +12,17 @@ steps:
       overrideParameters: '$(armTemplateParameters)'
 
   - task: AzureRmWebAppDeployment@4
-    displayName: 'Azure App Service Deploy'
+    displayName: 'Azure App Service Web Deploy'
     inputs:
       appType: webApp
       ConnectedServiceName: $(azureSubscriptionName)
       WebAppName: '$(WebAppName)-$(Environment.Name)'
-      package: $(Pipeline.Workspace)/app/*.zip
+      package: $(Pipeline.Workspace)/app/*Web.zip
 
   - task: AzureRmWebAppDeployment@4
-    displayName: 'Azure App Service Deploy'
+    displayName: 'Azure App Service Functon Deploy'
     inputs:
       appType: functionApp
       ConnectedServiceName: $(azureSubscriptionName)
-      WebAppName: '$(WebAppName)-$(Environment.Name)'
+      WebAppName: '$(WebAppName)-func-$(Environment.Name)'
       package: $(Pipeline.Workspace)/app/*Function.zip
