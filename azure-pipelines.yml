@@ -78,8 +78,7 @@ stages:
   jobs:
   - deployment: deployment_dev
     displayName: 'Dev'
-    pool:
-      vmImage: 'windows-2019'
+    pool: '$(poolName)'
     environment: 'dev'
     #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
     strategy:
