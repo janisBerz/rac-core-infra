@@ -5,6 +5,10 @@
         "webAppName": {
             "type": "string",
             "defaultValue": "someSuperWebApp"
+        },
+        "azFunctionName": {
+            "type": "string",
+            "defaultValue": "someSuperWebApp"
         }
     },
     "variables": {
@@ -47,7 +51,7 @@
                     "webAppName": {
                         "value": "[parameters('webAppName')]"
                     },
-                    "callbackUrl":{
+                    "callbackUrl": {
                         "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
                     }
                 }
@@ -68,7 +72,7 @@
                 },
                 "parameters": {
                     "appName": {
-                        "value": "[parameters('webAppName')]"
+                        "value": "[parameters('azFunctionName')]"
                     }
                 }
             }
@@ -77,7 +81,8 @@
             "name": "sendEmailLogicApp",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
-            "dependsOn": [],
+            "dependsOn": [
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
