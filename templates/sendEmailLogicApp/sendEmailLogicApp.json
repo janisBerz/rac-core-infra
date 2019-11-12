@@ -29,7 +29,7 @@
         {
             "type": "Microsoft.Web/connections",
             "apiVersion": "2016-06-01",
-            "name": "[parameters('workflowsName')]",
+            "name": "outlook",
             "location": "[parameters('location')]",
             "properties": {
                 "displayName": "[parameters('emailRecipients')]",
@@ -43,7 +43,7 @@
         {
             "type": "Microsoft.Web/connections",
             "apiVersion": "2016-06-01",
-            "name": "[parameters('workflowsName')]",
+            "name": "azureblob",
             "location": "[parameters('location')]",
             "properties": {
                 "displayName": "blob",
