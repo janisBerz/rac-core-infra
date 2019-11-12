@@ -66,7 +66,8 @@
             "apiVersion": "2016-09-01",
             "dependsOn": [
                 "azureAppServicePlan",
-                "appInsights"
+                "appInsights",
+                "azureFunction"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -84,8 +85,8 @@
                     "appInsightsInstrumentationKey": {
                         "value": "[reference('appInsights').outputs.appInsightsInstrumentationKey.value]"
                     },
-                    "callbackUrl": {
-                        "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
+                    "storageAccountConnectionString": {
+                        "value": "[reference('azureFunction').outputs.storageAccountConnectionString.value]"
                     }
                 }
             }
