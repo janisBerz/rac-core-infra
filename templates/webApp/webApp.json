@@ -47,10 +47,7 @@
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
           "appSettings": [
-            {
-              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-              "value": "[parameters('appInsightsInstrumentationKey')]"
-            }
+
           ],
           "connectionStrings": [
             {
