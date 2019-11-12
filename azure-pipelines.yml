@@ -17,6 +17,8 @@ stages:
   jobs:
   - job: Build
     pool: '$(poolName)'
+    workspace:
+      clean: all
     steps:
     - task: AzureResourceGroupDeployment@2
       displayName: 'Provision Infrastructure'
