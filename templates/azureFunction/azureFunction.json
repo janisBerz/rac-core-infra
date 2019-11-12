@@ -34,7 +34,7 @@
   "variables": {
     "functionAppName": "[concat(parameters('appName'))]",
     "hostingPlanName": "[parameters('appName')]",
-    "appInsighstName": "[parameters('appName')]",
+    "appInsightsName": "[parameters('appName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },
   "resources": [
