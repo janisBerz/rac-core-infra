@@ -129,7 +129,7 @@
                                     "name": "@{triggerBody()?['Name']}"
                                 },
                                 "function": {
-                                    "id": "[concat(resourceId(resourceGroup().name, 'providers/Microsoft.Web/sites', parameters('azFunctionName')), '/functions/Submit')]"
+                                    "id": "[concat('/subscriptions/',subscription().id,'/resourceGroups/',resourceGroup().name, '/providers/Microsoft.Web/sites', parameters('azFunctionName'), '/functions/Submit')]"
                                 }
                             }
                         }
