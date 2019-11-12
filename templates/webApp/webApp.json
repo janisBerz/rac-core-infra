@@ -2,6 +2,10 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "appServicePlanName": {
+      "type": "securestring",
+      "defaultValue": "someSecretValue"
+    },
     "webAppName": {
       "type": "string",
       "metadata": {
@@ -16,7 +20,11 @@
         "description": "Location for all resources"
       }
     },
-    "callbackUrl": {
+    "appInsightsInstrumentationKey": {
+      "type": "securestring",
+      "defaultValue": "someSecretValue"
+    },
+    "storageAccountConnectionString": {
       "type": "securestring",
       "defaultValue": "someSecretValue",
       "metadata": {
@@ -26,7 +34,7 @@
   },
   "variables": {
     "webAppPortalName": "[concat(parameters('webAppName'))]",
-    "appServicePlanName": "[parameters('webAppName')]"
+    "appServicePlanName": "[parameters('appServicePlanName')]"
   },
   "resources": [
     {
@@ -38,10 +46,16 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
+          "appSettings": [
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "value": "[parameters('appInsightsInstrumentationKey')]"
+            }
+          ],
           "connectionStrings": [
             {
-              "name": "callbackUrl",
-              "connectionString": "[parameters('callbackUrl')]",
+              "name": "storageAccountConnectionString",
+              "connectionString": "[parameters('storageAccountConnectionString')]",
               "type": "Custom"
             }
           ]

@@ -8,10 +8,10 @@
         "description": "The name of the function app that you wish to create."
       }
     },
-    "appInsightsName": {
+    "appInsightsInstrumentationKey": {
       "type": "string"
     },
-    "hostingPlanName": {
+    "appServicePlanName": {
       "type": "string"
     },
     "storageAccountType": {
@@ -36,26 +36,10 @@
   },
   "variables": {
     "functionAppName": "[concat(parameters('appName'))]",
-    "hostingPlanName": "[parameters('hostingPlanName')]",
-    "appInsightsName": "[parameters('appInsightsName')]",
+    "appServicePlanName": "[parameters('appServicePlanName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },
   "resources": [
-    {
-      "name": "[variables('appInsightsName')]",
-      "type": "Microsoft.Insights/components",
-      "apiVersion": "2015-05-01",
-      "location": "[parameters('location')]",
-      "tags": {
-        "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('functionAppName'))]": "Resource"
-      },
-      "dependsOn": [
-      ],
-      "properties": {
-        "applicationId": "[variables('functionAppName')]",
-        "application_Type": "web"
-      }
-    },
     {
       "type": "Microsoft.Storage/storageAccounts",
       "name": "[variables('storageAccountName')]",
@@ -74,15 +58,15 @@
       "kind": "functionapp",
       "properties": {
         "name": "[variables('functionAppName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "hostingEnvironment": "",
         "clientAffinityEnabled": false,
         "siteConfig": {
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+        //"[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
       ],
       "resources": [
         {
@@ -96,10 +80,17 @@
           "properties": {
             "AzureWebJobsStorage": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]",
             "FUNCTIONS_EXTENSION_VERSION": "~2",
-            "APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+            "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]"
+            //"APPINSIGHTS_INSTRUMENTATIONKEY": "[reference(resourceId('Microsoft.Insights/components', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
           }
         }
       ]
     }
-  ]
+  ],
+  "outputs": {
+    "storageAccountConnectionString": {
+      "type": "securestring",
+      "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]"
+    }
+  }
 }

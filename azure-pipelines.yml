@@ -1,28 +1,24 @@
-# ASP.NET Core (.NET Framework)
-# Build and test ASP.NET Core projects targeting the full .NET Framework.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
-
 variables:
   buildConfiguration: 'Release'
-  poolImageName: 'windows-latest'
+  poolName: 'rac-pool'
   System.Debug: 'false'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  projectName: 'rac-voting-demo'
-  webAppName: '$(projectName)'
-  azFunctionName: '$(projectName)-func-$(Environment.Name)'
+  coreInfrastructureName: 'rac-core-infra-demo'
+  webAppName: 'rac-fileupload-web-$(Environment.Name)'
+  azFunctionName: 'rac-fileinflate-$(Environment.Name)'
+  sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
-  resourceGroupName: '$(WebAppName)'
-  resourcename: '$(resourceGroupName)'
-  armTemplateParameters: '-webAppName $(webAppName)-$(Environment.Name) -azFunctionName $(azFunctionName)'
+  resourceGroupName: 'rac-demo-app'
+  armTemplateParameters: '-coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
 stages:
 - stage: Build
   jobs:
   - job: Build
-    pool:
-      vmImage: '$(poolImageName)'
+    pool: '$(poolName)'
+    # workspace:
+    #   clean: all
     steps:
     - task: AzureResourceGroupDeployment@2
       displayName: 'Provision Infrastructure'
@@ -35,41 +31,41 @@ stages:
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'DotNet Core Restore'
-      inputs:
-        command: restore
-        projects: '**/*.sln'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'DotNet Core Restore'
+    #   inputs:
+    #     command: restore
+    #     projects: '**/*.sln'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'DotNet Core Build'
-      inputs:
-        command: build
-        projects: '**/*.sln'
-        arguments: '--configuration $(buildConfiguration) --no-restore'
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'DotNet Core Build'
+    #   inputs:
+    #     command: build
+    #     projects: '**/*.sln'
+    #     arguments: '--configuration $(buildConfiguration) --no-restore'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'DotNet Core Package WebApp'
-      inputs:
-        command: publish
-        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
-        projects: '**/*.sln'
-        zipAfterPublish: true
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'DotNet Core Package WebApp'
+    #   inputs:
+    #     command: publish
+    #     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
+    #     projects: '**/*.sln'
+    #     zipAfterPublish: true
 
-    - task: DotNetCoreCLI@2
-      displayName: 'DotNet Core Package Function'
-      inputs:
-        command: publish
-        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
-        projects: '**/*Function.csproj'
-        publishWebProjects: false
-        zipAfterPublish: true
+    # - task: DotNetCoreCLI@2
+    #   displayName: 'DotNet Core Package Function'
+    #   inputs:
+    #     command: publish
+    #     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory) --no-build'
+    #     projects: '**/*Function.csproj'
+    #     publishWebProjects: false
+    #     zipAfterPublish: true
 
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish Artifacts'
-      inputs:
-        path: $(build.artifactstagingdirectory)
-        artifact: App
+    # - task: PublishPipelineArtifact@1
+    #   displayName: 'Publish Artifacts'
+    #   inputs:
+    #     path: $(build.artifactstagingdirectory)
+    #     artifact: App
 
     - task: PublishPipelineArtifact@1
       displayName: 'Publish ARM templates'
@@ -82,8 +78,7 @@ stages:
   jobs:
   - deployment: deployment_dev
     displayName: 'Dev'
-    pool:
-      vmImage: 'windows-2019'
+    pool: '$(poolName)'
     environment: 'dev'
     #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
     strategy:

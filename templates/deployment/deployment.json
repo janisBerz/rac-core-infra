@@ -2,6 +2,10 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "coreInfrastructureName": {
+            "type": "string",
+            "defaultValue": "someSuperWebApp"
+        },
         "webAppName": {
             "type": "string",
             "defaultValue": "someSuperWebApp"
@@ -9,12 +13,16 @@
         "azFunctionName": {
             "type": "string",
             "defaultValue": "someSuperWebApp"
+        },
+        "sendMailLogiAppName": {
+            "type": "string",
+            "defaultValue": "someSuperWebApp"
         }
 
     },
     "variables": {
-        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-voting-demo/pipeline-changes/templates",
-        "appServicePlanName": "[parameters('webAppName')]"
+        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/cleanup/templates",
+        "appServicePlanName": "[parameters('coreInfrastructureName')]"
     },
     "resources": [
         {
@@ -35,11 +43,31 @@
             }
         },
         {
+            "name": "appInsights",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/appInsights/appInsights.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appInsightsName": {
+                        "value": "[parameters('coreInfrastructureName')]"
+                    }
+                }
+            }
+        },
+        {
             "name": "webApp",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
             "dependsOn": [
                 "azureAppServicePlan",
+                "appInsights",
                 "azureFunction"
             ],
             "properties": {
@@ -49,11 +77,17 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
                     "webAppName": {
                         "value": "[parameters('webAppName')]"
                     },
-                    "callbackUrl": {
-                        "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
+                    "appInsightsInstrumentationKey": {
+                        "value": "[reference('appInsights').outputs.appInsightsInstrumentationKey.value]"
+                    },
+                    "storageAccountConnectionString": {
+                        "value": "[reference('azureFunction').outputs.storageAccountConnectionString.value]"
                     }
                 }
             }
@@ -63,7 +97,8 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
             "dependsOn": [
-                "azureAppServicePlan"
+                "azureAppServicePlan",
+                "appInsights"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -72,14 +107,14 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "appServicePlanName": {
+                        "value": "[variables('appServicePlanName')]"
+                    },
                     "appName": {
                         "value": "[parameters('azFunctionName')]"
                     },
-                    "appInsightsName": {
-                        "value": "[parameters('webAppName')]"
-                    },
-                    "hostingPlanName": {
-                        "value": "[parameters('webAppName')]"
+                    "appInsightsInstrumentationKey": {
+                        "value": "[reference('appInsights').outputs.appInsightsInstrumentationKey.value]"
                     }
                 }
             }
@@ -98,7 +133,7 @@
                 },
                 "parameters": {
                     "workflowsName": {
-                        "value": "[parameters('webAppName')]"
+                        "value": "[parameters('sendMailLogiAppName')]"
                     }
                 }
             }
