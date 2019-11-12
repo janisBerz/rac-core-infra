@@ -24,7 +24,7 @@
       "type": "securestring",
       "defaultValue": "someSecretValue"
     },
-    "callbackUrl": {
+    "storageAccountConnectionString": {
       "type": "securestring",
       "defaultValue": "someSecretValue",
       "metadata": {
@@ -46,15 +46,16 @@
       "properties": {
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
         "siteConfig": {
-          "connectionStrings": [
-            {
-              "name": "callbackUrl",
-              "connectionString": "[parameters('callbackUrl')]",
-              "type": "Custom"
-            },
+          "appSettings": [
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-              "connectionString": "[parameters('appInsightsInstrumentationKey')]",
+              "value": "[parameters('appInsightsInstrumentationKey')]"
+            }
+          ],
+          "connectionStrings": [
+            {
+              "name": "storageAccountConnectionString",
+              "connectionString": "[parameters('storageAccountConnectionString')]",
               "type": "Custom"
             }
           ]
