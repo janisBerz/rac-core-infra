@@ -4,7 +4,7 @@ variables:
   System.Debug: 'false'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  projectName: 'rac-voting-demo'
+  projectName: 'rac-core-infra-demo'
   webAppName: '$(projectName)'
   azFunctionName: '$(projectName)-func-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
