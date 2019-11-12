@@ -12,7 +12,7 @@
         }
     },
     "variables": {
-        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/master/templates",
+        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/cleanup/templates",
         "appServicePlanName": "[parameters('webAppName')]"
     },
     "resources": [
@@ -56,29 +56,29 @@
                 }
             }
         },
-        // {
-        //     "name": "azureFunction",
-        //     "type": "Microsoft.Resources/deployments",
-        //     "apiVersion": "2016-09-01",
-        //     "dependsOn": [
-        //         "azureAppServicePlan"
-        //     ],
-        //     "properties": {
-        //         "mode": "Incremental",
-        //         "templateLink": {
-        //             "uri": "[concat(variables('artifactsLocation'), '/azureFunction/azureFunction.json')]",
-        //             "contentVersion": "1.0.0.0"
-        //         },
-        //         "parameters": {
-        //             "appName": {
-        //                 "value": "[parameters('azFunctionName')]"
-        //             },
-        //             "appInsightsName": {
-        //                 "value": "[parameters('webAppName')]"
-        //             }
-        //         }
-        //     }
-        // },
+        {
+            "name": "azureFunction",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+                "azureAppServicePlan"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/azureFunction/azureFunction.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appName": {
+                        "value": "[parameters('azFunctionName')]"
+                    },
+                    "appInsightsName": {
+                        "value": "[parameters('webAppName')]"
+                    }
+                }
+            }
+        },
         {
             "name": "sendEmailLogicApp",
             "type": "Microsoft.Resources/deployments",
