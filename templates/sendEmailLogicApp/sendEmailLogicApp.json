@@ -32,7 +32,6 @@
             "name": "[parameters('workflowsName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/connections', parameters('workflowsName'))]"
             ],
             "properties": {
                 "state": "Enabled",
