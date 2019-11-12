@@ -34,6 +34,28 @@
             }
         },
         {
+            "name": "appInsights",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2016-09-01",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('artifactsLocation'), '/appInsights/appInsights.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appInsightsName": {
+                        "value": "[parameters('webAppName')]"
+                    },
+                    "callbackUrl": {
+                        "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
+                    }
+                }
+            }
+        },
+        {
             "name": "webApp",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2016-09-01",
