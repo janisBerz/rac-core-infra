@@ -7,9 +7,10 @@ variables:
   coreInfrastructureName: 'rac-core-infra-demo'
   webAppName: 'rac-fileupload-web-$(Environment.Name)'
   azFunctionName: 'rac-fileinflate-func-$(Environment.Name)'
+  sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: 'rac-demo-app'
-  armTemplateParameters: '-coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName)'
+  armTemplateParameters: '-coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
 stages:
 - stage: Build
