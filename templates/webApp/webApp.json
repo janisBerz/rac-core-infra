@@ -21,7 +21,7 @@
       }
     },
     "appInsightsInstrumentationKey": {
-      "type": "securestring",
+      "type": "string",
       "defaultValue": "someSecretValue"
     },
     "storageAccountConnectionString": {
