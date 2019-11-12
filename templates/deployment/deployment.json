@@ -73,6 +73,9 @@
                     "webAppName": {
                         "value": "[parameters('webAppName')]"
                     },
+                    "appInsightsInstrumentationKey": {
+                        "value": "[reference('appInsights').outputs.appInsightsInstrumentationKey.value]"
+                    }
                     "callbackUrl": {
                         "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
                     }
@@ -97,8 +100,8 @@
                     "appName": {
                         "value": "[parameters('azFunctionName')]"
                     },
-                    "appInsightsName": {
-                        "value": "[parameters('webAppName')]"
+                    "appInsightsInstrumentationKey": {
+                        "value": "[reference('appInsights').outputs.appInsightsInstrumentationKey.value]"
                     }
                 }
             }

@@ -16,6 +16,10 @@
         "description": "Location for all resources"
       }
     },
+    "appInsightsInstrumentationKey": {
+      "type": "securestring",
+      "defaultValue": "someSecretValue"
+    },
     "callbackUrl": {
       "type": "securestring",
       "defaultValue": "someSecretValue",
@@ -42,6 +46,11 @@
             {
               "name": "callbackUrl",
               "connectionString": "[parameters('callbackUrl')]",
+              "type": "Custom"
+            },
+            {
+              "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+              "connectionString": "[parameters('appInsightsInstrumentationKey')]",
               "type": "Custom"
             }
           ]
