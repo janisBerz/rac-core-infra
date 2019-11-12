@@ -76,7 +76,7 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-        "[resourceId('Microsoft.Insights/components', variables('appInsighstName'))]"
+        "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
 
       ],
       "resources": [
