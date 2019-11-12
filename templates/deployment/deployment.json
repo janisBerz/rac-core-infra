@@ -21,7 +21,7 @@
 
     },
     "variables": {
-        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/cleanup/templates",
+        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/master/templates",
         "appServicePlanName": "[parameters('coreInfrastructureName')]"
     },
     "resources": [
