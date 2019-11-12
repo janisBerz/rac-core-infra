@@ -8,9 +8,6 @@
         "description": "The name of the function app that you wish to create."
       }
     },
-    "appInsightsName": {
-      "type": "string"
-    },
     "appInsightsInstrumentationKey": {
       "type": "string"
     },
@@ -37,7 +34,6 @@
   "variables": {
     "functionAppName": "[concat(parameters('appName'))]",
     "hostingPlanName": "[parameters('appName')]",
-    "appInsightsName": "[parameters('appInsightsName')]",
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'func')]"
   },
   "resources": [
@@ -66,7 +62,7 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
         //"[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
       ],
       "resources": [

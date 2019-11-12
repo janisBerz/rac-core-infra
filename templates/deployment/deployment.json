@@ -75,7 +75,7 @@
                     },
                     "appInsightsInstrumentationKey": {
                         "value": "[reference('appInsights').outputs.appInsightsInstrumentationKey.value]"
-                    }
+                    },
                     "callbackUrl": {
                         "value": "[reference('sendEmailLogicApp').outputs.callbackUrl.value]"
                     }

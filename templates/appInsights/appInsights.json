@@ -14,7 +14,7 @@
     }
   },
   "variables": {
-    "appInsightsName": "[parameters('appInsightsName')]",
+    "appInsightsName": "[parameters('appInsightsName')]"
   },
   "resources": [
     {
