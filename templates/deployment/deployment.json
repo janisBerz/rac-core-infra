@@ -74,7 +74,7 @@
                     "appName": {
                         "value": "[parameters('azFunctionName')]"
                     },
-                    "appInsighstName": {
+                    "appInsightsName": {
                         "value": "[parameters('webAppName')]"
                     }
                 }
