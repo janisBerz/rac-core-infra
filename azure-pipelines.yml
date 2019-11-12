@@ -1,6 +1,6 @@
 variables:
   buildConfiguration: 'Release'
-  poolImageName: 'rac-pool'
+  poolName: 'rac-pool'
   System.Debug: 'false'
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
@@ -16,8 +16,7 @@ stages:
 - stage: Build
   jobs:
   - job: Build
-    pool:
-      vmImage: '$(poolImageName)'
+    pool: '$(poolName)'
     steps:
     - task: AzureResourceGroupDeployment@2
       displayName: 'Provision Infrastructure'
