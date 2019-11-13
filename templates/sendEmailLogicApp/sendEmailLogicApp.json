@@ -129,7 +129,7 @@
                                     "name": "@{triggerBody()?['Name']}"
                                 },
                                 "function": {
-                                    "id": "[parameters('azFunctionAppResourceId')]"
+                                    "id": "[concat(parameters('azFunctionAppResourceId'), '/functions/Submit')]"
                                 }
                             }
                         }
