@@ -86,6 +86,26 @@
       ],
       "resources": [
         {
+          "name": "MSDeploy",
+          "type": "extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
+          ],
+          "tags": {
+            "displayName": "deployment"
+          },
+          "properties": {
+            "packageUri": "https://raw.githubusercontent.com/janisBerz/rac-fileinflate-func/master/package/s.zip",
+            "dbType": "None",
+            "connectionString": "",
+            "setParameters": {
+              "IIS Web Application Name": "[variables('functionAppName')]"
+            }
+          }
+        },
+        {
           "apiVersion": "2016-08-01",
           "name": "appsettings",
           "type": "config",
@@ -102,25 +122,6 @@
             "DestinationFileShare": "unarchived",
             "GetStatusKey": "[listkeys(concat(resourceId('Microsoft.Web/sites', variables('functionAppName')), '/host/default/'),'2016-08-01').functionKeys.default]",
             "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]"
-          }
-        },
-        {
-          "apiVersion": "2016-08-01",
-          "name": "MSDeploy",
-          "type": "Extensions",
-          "dependsOn": [
-            "[concat('Microsoft.Web/Sites/', variables('functionAppName'))]"
-          ],
-          "properties": {
-            "addOnPackages": [
-              {
-                "packageUri": "https://raw.githubusercontent.com/janisBerz/rac-fileinflate-func/master/package/s.zip",
-                "AppOffline": true,
-                "setParameters": {
-                  "IIS Web Application Name": "[variables('functionAppName')]"
-                }
-              }
-            ]
           }
         }
       ]

@@ -19,7 +19,7 @@ stages:
     pool: '$(poolName)'
     steps:
     - task: AzureResourceGroupDeployment@2
-      displayName: 'Provision Infrastructure'
+      displayName: 'Validate ARM Templates'
       inputs:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
