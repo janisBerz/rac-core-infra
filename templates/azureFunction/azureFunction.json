@@ -68,7 +68,7 @@
       ]
     },
     {
-      "apiVersion": "2016-08-01",
+      "apiVersion": "2015-08-01",
       "type": "Microsoft.Web/sites",
       "name": "[variables('functionAppName')]",
       "location": "[parameters('location')]",
@@ -106,7 +106,7 @@
           }
         },
         {
-          "apiVersion": "2016-08-01",
+          "apiVersion": "2015-08-01",
           "name": "appsettings",
           "type": "config",
           "dependsOn": [
