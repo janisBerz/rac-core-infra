@@ -24,6 +24,7 @@
         }
     },
     "variables": {
+        "functionId": "[concat(parameters('azFunctionAppResourceId'), '/functions/Submit')]"
     },
     "resources": [
         {
@@ -129,7 +130,7 @@
                                     "name": "@{triggerBody()?['Name']}"
                                 },
                                 "function": {
-                                    "id": "[concat(parameters('azFunctionAppResourceId'), '/functions/Submit')]"
+                                    "id": "[variables('functionId')]"
                                 }
                             }
                         }
