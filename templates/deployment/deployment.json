@@ -137,7 +137,7 @@
                         "value": "[parameters('sendMailLogiAppName')]"
                     },
                     "azFunctionAppResourceId": {
-                        "value": "[reference('appInsights').outputs.azFunctionAppResourceId.value]"
+                        "value": "[reference('azureFunction').outputs.azFunctionAppResourceId.value]"
                     }
                 }
             }
