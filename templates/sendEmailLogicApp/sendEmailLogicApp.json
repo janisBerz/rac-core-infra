@@ -11,8 +11,8 @@
             "defaultValue": "myWorkflow",
             "type": "string"
         },
-        "azFunctionName": {
-            "defaultValue": "someazfunctionname",
+        "azFunctionAppResourceId": {
+            "defaultValue": "functionId",
             "type": "string"
         },
         "location": {
@@ -129,7 +129,7 @@
                                     "name": "@{triggerBody()?['Name']}"
                                 },
                                 "function": {
-                                    "id": "[concat(subscription().id,'/resourceGroups/',resourceGroup().name, '/providers/Microsoft.Web/sites', parameters('azFunctionName'), '/functions/Submit')]"
+                                    "id": "[parameters('azFunctionAppResourceId')]"
                                 }
                             }
                         }

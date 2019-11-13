@@ -136,8 +136,8 @@
                     "workflowsName": {
                         "value": "[parameters('sendMailLogiAppName')]"
                     },
-                    "azFunctionName": {
-                        "value": "[parameters('azFunctionName')]"
+                    "azFunctionAppResourceId": {
+                        "value": "[reference('appInsights').outputs.azFunctionAppResourceId.value]"
                     }
                 }
             }
