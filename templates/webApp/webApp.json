@@ -70,7 +70,8 @@
         "[concat('Microsoft.Web/sites/', variables('webAppPortalName'))]"
       ],
       "properties": {
-        "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]"
+        "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]",
+        "Key1": "somve value"
       }
     }
   ]
