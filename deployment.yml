@@ -1,0 +1,28 @@
+steps:
+  - task: DownloadPipelineArtifact@2
+
+  - task: AzureResourceGroupDeployment@2
+    displayName: 'Provision Infrastructure'
+    inputs:
+      azureSubscription: $(azureSubscriptionName)
+      resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
+      location: 'West Europe'
+      csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
+      csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+      overrideParameters: '$(armTemplateParameters)'
+
+  # - task: AzureRmWebAppDeployment@4
+  #   displayName: 'Azure App Service Deploy'
+  #   inputs:
+  #     appType: webApp
+  #     ConnectedServiceName: $(azureSubscriptionName)
+  #     WebAppName: '$(WebAppName)-$(Environment.Name)'
+  #     package: $(Pipeline.Workspace)/app/*.zip
+
+  # - task: AzureRmWebAppDeployment@4
+  #   displayName: 'Azure App Service Deploy'
+  #   inputs:
+  #     appType: functionApp
+  #     ConnectedServiceName: $(azureSubscriptionName)
+  #     WebAppName: '$(WebAppName)-$(Environment.Name)'
+  #     package: $(Pipeline.Workspace)/app/*Function.zip
