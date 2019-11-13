@@ -18,10 +18,9 @@
             "type": "string",
             "defaultValue": "someSuperWebApp"
         }
-
     },
     "variables": {
-        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/logic-app-improvements/templates",
+        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/master/templates",
         "appServicePlanName": "[parameters('coreInfrastructureName')]"
     },
     "resources": [

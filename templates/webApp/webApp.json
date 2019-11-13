@@ -61,6 +61,18 @@
           ]
         }
       }
+    },
+    {
+      "name": "[concat(variables('webAppPortalName'), '/appsettings')]",
+      "type": "Microsoft.Web/sites/config",
+      "apiVersion": "2018-11-01",
+      "dependsOn": [
+        "[concat('Microsoft.Web/sites/', variables('webAppPortalName'))]"
+      ],
+      "properties": {
+        "APPINSIGHTS_INSTRUMENTATIONKEY": "[parameters('appInsightsInstrumentationKey')]",
+        "Key1": "somve value"
+      }
     }
   ]
 }
