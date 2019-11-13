@@ -17,8 +17,6 @@ stages:
   jobs:
   - job: Build
     pool: '$(poolName)'
-    # workspace:
-    #   clean: all
     steps:
     - task: AzureResourceGroupDeployment@2
       displayName: 'Provision Infrastructure'
@@ -85,7 +83,15 @@ stages:
       runOnce:
         deploy:
           steps:
-          - template: deployment.yml
+            - task: AzureResourceGroupDeployment@2
+              displayName: 'Provision Infrastructure'
+              inputs:
+                azureSubscription: $(azureSubscriptionName)
+                resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
+                location: 'West Europe'
+                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
+                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Test
   jobs:
@@ -94,11 +100,37 @@ stages:
     pool:
       vmImage: 'windows-2019'
     environment: 'test'
-    condition: |
-      and(succeeded(),
-      eq(variables['Build.Reason'], 'PullRequest'))
     strategy:
       runOnce:
         deploy:
           steps:
-          - template: deployment.yml
+            - task: AzureResourceGroupDeployment@2
+              displayName: 'Provision Infrastructure'
+              inputs:
+                azureSubscription: $(azureSubscriptionName)
+                resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
+                location: 'West Europe'
+                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
+                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                overrideParameters: '$(armTemplateParameters)'
+
+- stage: Deployment_Prod
+  jobs:
+  - deployment: deployment_prod
+    displayName: 'Prod'
+    pool: '$(poolName)'
+    environment: 'prod'
+    #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureResourceGroupDeployment@2
+              displayName: 'Provision Infrastructure'
+              inputs:
+                azureSubscription: $(azureSubscriptionName)
+                resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
+                location: 'West Europe'
+                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
+                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                overrideParameters: '$(armTemplateParameters)'
