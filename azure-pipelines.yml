@@ -87,18 +87,18 @@ stages:
           steps:
           - template: deployment.yml
 
-# - stage: Deployment_Test
-#   jobs:
-#   - deployment: deployment_test
-#     displayName: 'Test'
-#     pool:
-#       vmImage: 'windows-2019'
-#     environment: 'test'
-#     condition: |
-#       and(succeeded(),
-#       eq(variables['Build.Reason'], 'PullRequest'))
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - template: deployment.yml
+- stage: Deployment_Test
+  jobs:
+  - deployment: deployment_test
+    displayName: 'Test'
+    pool:
+      vmImage: 'windows-2019'
+    environment: 'test'
+    condition: |
+      and(succeeded(),
+      eq(variables['Build.Reason'], 'PullRequest'))
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: deployment.yml
