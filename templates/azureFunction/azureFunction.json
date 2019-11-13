@@ -86,26 +86,6 @@
       ],
       "resources": [
         {
-          "name": "MSDeploy",
-          "type": "extensions",
-          "location": "[resourceGroup().location]",
-          "apiVersion": "2015-08-01",
-          "dependsOn": [
-            "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"
-          ],
-          "tags": {
-            "displayName": "deployment"
-          },
-          "properties": {
-            "packageUri": "https://raw.githubusercontent.com/janisBerz/rac-fileinflate-func/master/package/s.zip",
-            "dbType": "None",
-            "connectionString": "",
-            "setParameters": {
-              "IIS Web Application Name": "[variables('functionAppName')]"
-            }
-          }
-        },
-        {
           "apiVersion": "2015-08-01",
           "name": "appsettings",
           "type": "config",

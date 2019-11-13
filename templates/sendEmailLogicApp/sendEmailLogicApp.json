@@ -101,9 +101,7 @@
                     "actions": {
                         "Send_an_email_(V2)": {
                             "runAfter": {
-                                "Submit": [
-                                    "Succeeded"
-                                ]
+                                "Submit": [ ]
                             },
                             "type": "ApiConnection",
                             "inputs": {
@@ -119,19 +117,6 @@
                                 },
                                 "method": "post",
                                 "path": "/v2/Mail"
-                            }
-                        },
-                        "Submit": {
-                            "runAfter": {
-                            },
-                            "type": "Function",
-                            "inputs": {
-                                "body": {
-                                    "name": "@{triggerBody()?['Name']}"
-                                },
-                                "function": {
-                                    "id": "[variables('functionId')]"
-                                }
                             }
                         }
                     },
