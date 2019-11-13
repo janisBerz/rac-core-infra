@@ -6,7 +6,7 @@ variables:
   buildPlatform: 'Any CPU'
   coreInfrastructureName: 'rac-core-infra-demo'
   webAppName: 'rac-fileupload-web-$(Environment.Name)'
-  azFunctionName: 'rac-fileinflate-$(Environment.Name)'
+  azFunctionName: 'rac-fileinflate-func-$(Environment.Name)'
   sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: 'rac-demo-app'
