@@ -54,7 +54,7 @@
           ],
           "connectionStrings": [
             {
-              "name": "storageAccountConnectionString",
+              "name": "DestinationStorageAccount",
               "connectionString": "[parameters('storageAccountConnectionString')]",
               "type": "Custom"
             }
