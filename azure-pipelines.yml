@@ -7,7 +7,8 @@ variables:
   sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: 'rac-demo-app'
-  armTemplateParameters: '-coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
+  stagingResourceGroupName: 'rac-staging'
+  armTemplateParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)" -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
 stages:
 - stage: Build
@@ -15,14 +16,28 @@ stages:
   - job: Build
     pool: '$(poolName)'
     steps:
+
+    - task: AzureFileCopy@3
+      displayName: 'Stage files'
+      inputs:
+        SourcePath: '$(System.DefaultWorkingDirectory)/templates'
+        azureSubscription: '$(azureSubscriptionName)'
+        Destination: 'AzureBlob'
+        storage: 'racstagingarea'
+        ContainerName: 'staging'
+        outputStorageUri: 'artifactsLocation'
+        outputStorageContainerSasToken: 'artifactsLocationSasToken'
+        sasTokenTimeOutInMinutes: '240'
+
     - task: AzureResourceGroupDeployment@2
       displayName: 'Validate ARM Templates'
       inputs:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
         location: 'West Europe'
-        csmFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.json
-        csmParametersFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.parameters.json
+        templateLocation: 'URL of the file'
+        csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+        csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
@@ -42,35 +57,61 @@ stages:
       runOnce:
         deploy:
           steps:
+
+            - task: AzureFileCopy@3
+              displayName: 'Stage files'
+              inputs:
+                SourcePath: '$(Pipeline.Workspace)/templates'
+                azureSubscription: '$(azureSubscriptionName)'
+                Destination: 'AzureBlob'
+                storage: 'racstagingarea'
+                ContainerName: 'staging'
+                outputStorageUri: 'artifactsLocation'
+                outputStorageContainerSasToken: 'artifactsLocationSasToken'
+                sasTokenTimeOutInMinutes: '240'
+
             - task: AzureResourceGroupDeployment@2
               displayName: 'Provision Infrastructure'
               inputs:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                templateLocation: 'URL of the file'
+                csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Test
   jobs:
   - deployment: deployment_test
     displayName: 'Test'
-    pool:
-      vmImage: 'windows-2019'
+    pool: '$(poolName)'
     environment: 'test'
     strategy:
       runOnce:
         deploy:
           steps:
+            - task: AzureFileCopy@3
+              displayName: 'Stage files'
+              inputs:
+                SourcePath: '$(Pipeline.Workspace)/templates'
+                azureSubscription: '$(azureSubscriptionName)'
+                Destination: 'AzureBlob'
+                storage: 'racstagingarea'
+                ContainerName: 'staging'
+                outputStorageUri: 'artifactsLocation'
+                outputStorageContainerSasToken: 'artifactsLocationSasToken'
+                sasTokenTimeOutInMinutes: '240'
+
             - task: AzureResourceGroupDeployment@2
               displayName: 'Provision Infrastructure'
               inputs:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                templateLocation: 'URL of the file'
+                csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Prod
@@ -83,12 +124,25 @@ stages:
       runOnce:
         deploy:
           steps:
+            - task: AzureFileCopy@3
+              displayName: 'Stage files'
+              inputs:
+                SourcePath: '$(Pipeline.Workspace)/templates'
+                azureSubscription: '$(azureSubscriptionName)'
+                Destination: 'AzureBlob'
+                storage: 'racstagingarea'
+                ContainerName: 'staging'
+                outputStorageUri: 'artifactsLocation'
+                outputStorageContainerSasToken: 'artifactsLocationSasToken'
+                sasTokenTimeOutInMinutes: '240'
+
             - task: AzureResourceGroupDeployment@2
               displayName: 'Provision Infrastructure'
               inputs:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                templateLocation: 'URL of the file'
+                csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
