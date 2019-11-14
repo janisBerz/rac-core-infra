@@ -147,9 +147,6 @@
                     },
                     "storageAccountName": {
                         "value": "[reference('azureFunction').outputs.storageAccountName.value]"
-                    },
-                    "storageAccountKey": {
-                        "value": "[reference('azureFunction').outputs.storageAccountKey.value]"
                     }
                 }
             }
