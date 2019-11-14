@@ -35,8 +35,8 @@ stages:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
         location: 'West Europe'
-        csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-        csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+        csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+        csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
@@ -58,8 +58,8 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-                csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+                csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Test
@@ -78,8 +78,8 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-                csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+                csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Prod
@@ -98,6 +98,6 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-                csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+                csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
