@@ -16,16 +16,6 @@ stages:
   - job: Build
     pool: '$(poolName)'
     steps:
-    - task: AzureResourceGroupDeployment@2
-      displayName: 'Validate ARM Templates'
-      inputs:
-        azureSubscription: $(azureSubscriptionName)
-        resourceGroupName: '$(resourceGroupName)'
-        location: 'West Europe'
-        csmFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.json
-        csmParametersFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.parameters.json
-        overrideParameters: '$(armTemplateParameters)'
-        deploymentMode: 'Validation'
 
     - task: AzureFileCopy@3
       displayName: 'Stage files'
@@ -38,6 +28,19 @@ stages:
         outputStorageUri: 'artifactsLocation'
         outputStorageContainerSasToken: 'artifactsLocationSasToken'
         sasTokenTimeOutInMinutes: '240'
+
+    - task: AzureResourceGroupDeployment@2
+      displayName: 'Validate ARM Templates'
+      inputs:
+        azureSubscription: $(azureSubscriptionName)
+        resourceGroupName: '$(resourceGroupName)'
+        location: 'West Europe'
+        csmFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.json
+        csmParametersFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.parameters.json
+        overrideParameters: '$(armTemplateParameters)'
+        deploymentMode: 'Validation'
+
+
 
 - stage: Deployment_Dev
   jobs:
