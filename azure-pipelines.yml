@@ -53,10 +53,6 @@ stages:
     displayName: 'Dev'
     pool: '$(poolName)'
     environment: 'dev'
-    dependsOn: Build
-    variables:
-      artifactsLocation: $[dependencies.Build.outputs['artifactsLocation']]
-      artifactsLocationSasToken: $[dependencies.Build.outputs['artifactsLocationSasToken']]
     strategy:
       runOnce:
         deploy:
