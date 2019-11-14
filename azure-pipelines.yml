@@ -57,6 +57,7 @@ stages:
       runOnce:
         deploy:
           steps:
+
             - task: AzureFileCopy@3
               displayName: 'Stage files'
               inputs:
@@ -90,6 +91,18 @@ stages:
       runOnce:
         deploy:
           steps:
+            - task: AzureFileCopy@3
+              displayName: 'Stage files'
+              inputs:
+                SourcePath: '$(Pipeline.Workspace)/templates'
+                azureSubscription: '$(azureSubscriptionName)'
+                Destination: 'AzureBlob'
+                storage: 'racstagingarea'
+                ContainerName: 'staging'
+                outputStorageUri: 'artifactsLocation'
+                outputStorageContainerSasToken: 'artifactsLocationSasToken'
+                sasTokenTimeOutInMinutes: '240'
+
             - task: AzureResourceGroupDeployment@2
               displayName: 'Provision Infrastructure'
               inputs:
@@ -111,6 +124,18 @@ stages:
       runOnce:
         deploy:
           steps:
+            - task: AzureFileCopy@3
+              displayName: 'Stage files'
+              inputs:
+                SourcePath: '$(Pipeline.Workspace)/templates'
+                azureSubscription: '$(azureSubscriptionName)'
+                Destination: 'AzureBlob'
+                storage: 'racstagingarea'
+                ContainerName: 'staging'
+                outputStorageUri: 'artifactsLocation'
+                outputStorageContainerSasToken: 'artifactsLocationSasToken'
+                sasTokenTimeOutInMinutes: '240'
+
             - task: AzureResourceGroupDeployment@2
               displayName: 'Provision Infrastructure'
               inputs:
