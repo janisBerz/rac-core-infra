@@ -10,13 +10,20 @@ variables:
   stagingResourceGroupName: 'rac-staging'
   armTemplateParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)" -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
+trigger:
+  branches:
+    include:
+      - master
+      - refs/tags/v*
+pr:
+- master
+
 stages:
 - stage: Build
   jobs:
   - job: Build
     pool: '$(poolName)'
     steps:
-
     - task: AzureFileCopy@3
       displayName: 'Stage files'
       inputs:
@@ -57,8 +64,8 @@ stages:
       runOnce:
         deploy:
           steps:
-
             - task: AzureFileCopy@3
+              condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
               displayName: 'Stage files'
               inputs:
                 SourcePath: '$(Pipeline.Workspace)/templates'
@@ -71,6 +78,7 @@ stages:
                 sasTokenTimeOutInMinutes: '240'
 
             - task: AzureResourceGroupDeployment@2
+              condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
               displayName: 'Provision Infrastructure'
               inputs:
                 azureSubscription: $(azureSubscriptionName)
@@ -92,6 +100,7 @@ stages:
         deploy:
           steps:
             - task: AzureFileCopy@3
+              condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
               displayName: 'Stage files'
               inputs:
                 SourcePath: '$(Pipeline.Workspace)/templates'
@@ -104,6 +113,7 @@ stages:
                 sasTokenTimeOutInMinutes: '240'
 
             - task: AzureResourceGroupDeployment@2
+              condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
               displayName: 'Provision Infrastructure'
               inputs:
                 azureSubscription: $(azureSubscriptionName)
@@ -125,6 +135,7 @@ stages:
         deploy:
           steps:
             - task: AzureFileCopy@3
+              condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
               displayName: 'Stage files'
               inputs:
                 SourcePath: '$(Pipeline.Workspace)/templates'
@@ -137,6 +148,7 @@ stages:
                 sasTokenTimeOutInMinutes: '240'
 
             - task: AzureResourceGroupDeployment@2
+              condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
               displayName: 'Provision Infrastructure'
               inputs:
                 azureSubscription: $(azureSubscriptionName)
