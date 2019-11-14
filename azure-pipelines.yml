@@ -1,10 +1,7 @@
 variables:
-  buildConfiguration: 'Release'
   poolName: 'rac-pool'
   System.Debug: 'false'
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  coreInfrastructureName: 'rac-core-infra-demo'
+  coreInfrastructureName: 'rac-core-infra-$(Environment.Name)'
   webAppName: 'rac-fileupload-web-$(Environment.Name)'
   azFunctionName: 'rac-fileinflate-func-$(Environment.Name)'
   sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
@@ -19,7 +16,7 @@ stages:
     pool: '$(poolName)'
     steps:
     - task: AzureResourceGroupDeployment@2
-      displayName: 'Provision Infrastructure'
+      displayName: 'Validate ARM Templates'
       inputs:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
@@ -35,14 +32,12 @@ stages:
         path: $(System.DefaultWorkingDirectory)/templates
         artifact: templates
 
-
 - stage: Deployment_Dev
   jobs:
   - deployment: deployment_dev
     displayName: 'Dev'
     pool: '$(poolName)'
     environment: 'dev'
-    #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
     strategy:
       runOnce:
         deploy:
@@ -84,7 +79,6 @@ stages:
     displayName: 'Prod'
     pool: '$(poolName)'
     environment: 'prod'
-    #condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/feature'))
     strategy:
       runOnce:
         deploy:
