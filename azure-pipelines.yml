@@ -7,7 +7,8 @@ variables:
   sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: 'rac-demo-app'
-  armTemplateParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)" -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
+  stagingResourceGroupName: 'rac-staging'
+  armTemplateParameters: ' -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
 stages:
 - stage: Build
@@ -29,11 +30,11 @@ stages:
     - task: AzureFileCopy@3
       displayName: 'Stage files'
       inputs:
-        SourcePath: 'AzureResourceGroup1'
-        azureSubscription: 'demo-deploy-sp'
+        SourcePath: '$(stagingResourceGroupName)'
+        azureSubscription: '$(azureSubscriptionName)'
         Destination: 'AzureBlob'
-        storage: 'stage3a4176e058d34bb88cc'
-        ContainerName: 'democontainer'
+        storage: 'racstagingarea'
+        ContainerName: 'staging'
         outputStorageUri: 'artifactsLocation'
         outputStorageContainerSasToken: 'artifactsLocationSasToken'
         sasTokenTimeOutInMinutes: '240'
