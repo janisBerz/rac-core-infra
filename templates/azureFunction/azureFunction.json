@@ -129,6 +129,14 @@
       "type": "string",
       "value": "[concat('DefaultEndpointsProtocol=https;AccountName=',variables('storageAccountName'),';AccountKey=',listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1,';')]"
     },
+    "storageAccountKey": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2015-05-01-preview').key1]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageAccountName')]"
+    },
     "azFunctionAppResourceId": {
       "type": "string",
       "value": "[resourceId('Microsoft.Web/sites', variables('functionAppName'))]"

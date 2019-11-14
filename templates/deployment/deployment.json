@@ -144,6 +144,12 @@
                     },
                     "azFunctionAppResourceId": {
                         "value": "[reference('azureFunction').outputs.azFunctionAppResourceId.value]"
+                    },
+                    "storageAccountName": {
+                        "value": "[reference('azureFunction').outputs.storageAccountName.value]"
+                    },
+                    "storageAccountKey": {
+                        "value": "[reference('azureFunction').outputs.storageAccountKey.value]"
                     }
                 }
             }
