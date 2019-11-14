@@ -20,7 +20,7 @@
         }
     },
     "variables": {
-        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/master/templates",
+        "artifactsLocation": "https://raw.githubusercontent.com/janisBerz/rac-core-infra-demo/package-deployment/templates",
         "appServicePlanName": "[parameters('coreInfrastructureName')]"
     },
     "resources": [
@@ -134,6 +134,9 @@
                 "parameters": {
                     "workflowsName": {
                         "value": "[parameters('sendMailLogiAppName')]"
+                    },
+                    "azFunctionAppResourceId": {
+                        "value": "[reference('azureFunction').outputs.azFunctionAppResourceId.value]"
                     }
                 }
             }

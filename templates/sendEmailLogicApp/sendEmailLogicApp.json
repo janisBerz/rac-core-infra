@@ -11,6 +11,10 @@
             "defaultValue": "myWorkflow",
             "type": "string"
         },
+        "azFunctionAppResourceId": {
+            "defaultValue": "functionId",
+            "type": "string"
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -20,6 +24,7 @@
         }
     },
     "variables": {
+        "functionId": "[concat(parameters('azFunctionAppResourceId'), '/functions/Submit')]"
     },
     "resources": [
         {
@@ -96,7 +101,9 @@
                     "actions": {
                         "Send_an_email_(V2)": {
                             "runAfter": {
-                                "Submit": [ ]
+                                "Submit": [
+                                    "Succeeded"
+                                ]
                             },
                             "type": "ApiConnection",
                             "inputs": {
@@ -112,6 +119,19 @@
                                 },
                                 "method": "post",
                                 "path": "/v2/Mail"
+                            }
+                        },
+                        "Submit": {
+                            "runAfter": {
+                            },
+                            "type": "Function",
+                            "inputs": {
+                                "body": {
+                                    "name": "@{triggerBody()?['Name']}"
+                                },
+                                "function": {
+                                    "id": "[variables('functionId')]"
+                                }
                             }
                         }
                     },
