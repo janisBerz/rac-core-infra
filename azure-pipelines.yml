@@ -8,7 +8,7 @@ variables:
   azureSubscriptionName: 'DevTest'
   resourceGroupName: 'rac-demo-app'
   stagingResourceGroupName: 'rac-staging'
-  armTemplateParameters: ' -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
+  armTemplateParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)" -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
 stages:
 - stage: Build
