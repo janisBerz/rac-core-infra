@@ -11,10 +11,6 @@
             "defaultValue": "myWorkflow",
             "type": "string"
         },
-        "azFunctionAppResourceId": {
-            "defaultValue": "functionId",
-            "type": "string"
-        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -24,7 +20,6 @@
         }
     },
     "variables": {
-        "functionId": "[concat(parameters('azFunctionAppResourceId'), '/functions/Submit')]"
     },
     "resources": [
         {
