@@ -41,14 +41,15 @@ stages:
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
-
-
 - stage: Deployment_Dev
   jobs:
   - deployment: deployment_dev
     displayName: 'Dev'
     pool: '$(poolName)'
     environment: 'dev'
+    variables:
+      artifactsLocation: $[dependencies.Build.outputs['artifactsLocation']]
+      artifactsLocationSasToken: $[dependencies.Build.outputs['artifactsLocationSasToken']]
     strategy:
       runOnce:
         deploy:
