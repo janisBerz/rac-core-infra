@@ -7,7 +7,7 @@ variables:
   sendMailLogiAppName: 'rac-sendemail-$(Environment.Name)'
   azureSubscriptionName: 'DevTest'
   resourceGroupName: 'rac-demo-app'
-  armTemplateParameters: '-coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
+  armTemplateParameters: '-_artifactsLocation $(artifactsLocation) -_artifactsLocationSasToken "$(artifactsLocationSasToken)" -coreInfrastructureName $(coreInfrastructureName) -webAppName $(webAppName) -azFunctionName $(azFunctionName) -sendMailLogiAppName $(sendMailLogiAppName)'
 
 stages:
 - stage: Build
@@ -26,11 +26,17 @@ stages:
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
-    - task: PublishPipelineArtifact@1
-      displayName: 'Publish ARM templates'
+    - task: AzureFileCopy@3
+      displayName: 'Stage files'
       inputs:
-        path: $(System.DefaultWorkingDirectory)/templates
-        artifact: templates
+        SourcePath: 'AzureResourceGroup1'
+        azureSubscription: 'demo-deploy-sp'
+        Destination: 'AzureBlob'
+        storage: 'stage3a4176e058d34bb88cc'
+        ContainerName: 'democontainer'
+        outputStorageUri: 'artifactsLocation'
+        outputStorageContainerSasToken: 'artifactsLocationSasToken'
+        sasTokenTimeOutInMinutes: '240'
 
 - stage: Deployment_Dev
   jobs:
