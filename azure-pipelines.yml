@@ -35,8 +35,8 @@ stages:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
         location: 'West Europe'
-        csmFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.json
-        csmParametersFile: $(System.DefaultWorkingDirectory)/templates/deployment/deployment.parameters.json
+        csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+        csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
@@ -58,16 +58,15 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Test
   jobs:
   - deployment: deployment_test
     displayName: 'Test'
-    pool:
-      vmImage: 'windows-2019'
+    pool: '$(poolName)'
     environment: 'test'
     strategy:
       runOnce:
@@ -79,8 +78,8 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Prod
@@ -99,6 +98,6 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
-                csmFile: $(Pipeline.Workspace)/templates/deployment/deployment.json
-                csmParametersFile: $(Pipeline.Workspace)/templates/deployment/deployment.parameters.json
+                csmFile: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
+                csmParametersFile: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
