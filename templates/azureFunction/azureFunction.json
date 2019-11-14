@@ -99,10 +99,7 @@
           "properties": {
             "packageUri": "https://raw.githubusercontent.com/janisBerz/rac-fileinflate-func/master/package/s.zip",
             "dbType": "None",
-            "connectionString": "",
-            "setParameters": {
-              "IIS Web Application Name": "[variables('functionAppName')]"
-            }
+            "connectionString": ""
           }
         },
         {
