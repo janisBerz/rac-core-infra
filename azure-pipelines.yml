@@ -30,7 +30,7 @@ stages:
     - task: AzureFileCopy@3
       displayName: 'Stage files'
       inputs:
-        SourcePath: '$(stagingResourceGroupName)'
+        SourcePath: '$(System.DefaultWorkingDirectory)/templates'
         azureSubscription: '$(azureSubscriptionName)'
         Destination: 'AzureBlob'
         storage: 'racstagingarea'
