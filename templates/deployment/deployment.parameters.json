@@ -7,6 +7,12 @@
         },
         "azFunctionName": {
             "value": "core-infra-dev"
+        },
+        "_artifactsLocation": {
+            "value": "core-infra-dev"
+        },
+        "_artifactsLocationSasToken": {
+            "value": "core-infra-dev"
         }
     }
 }
