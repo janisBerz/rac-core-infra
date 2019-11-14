@@ -142,12 +142,12 @@
                     "$connections": {
                         "value": {
                             "azureblob": {
-                                "connectionId": "[resourceId('Microsoft.Web/connections', 'azureblob')]",
+                                "connectionId": "[resourceId(subscription().id, resourceGroup().name, 'Microsoft.Web/connections', 'azureblob')]",
                                 "connectionName": "azureblob",
                                 "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/azureblob')]"
                             },
                             "outlook": {
-                                "connectionId": "[resourceId('Microsoft.Web/connections', 'outlook')]",
+                                "connectionId": "[resourceId(subscription().id, resourceGroup().name,'Microsoft.Web/connections', 'outlook')]",
                                 "connectionName": "outlook",
                                 "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/outlook')]"
                             }
