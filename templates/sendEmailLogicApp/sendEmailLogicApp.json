@@ -51,16 +51,15 @@
             "apiVersion": "2016-06-01",
             "name": "azureblob",
             "location": "[parameters('location')]",
+            "scale": null,
             "properties": {
                 "displayName": "blob",
-                "customParameterValues": {
-                },
-                "api": {
-                    "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/azureblob')]"
-                },
                 "parameterValues": {
                     "accountName": "[parameters('storageAccountName')]",
                     "accessKey": "[listKeys(variables('storageAccountId'),'2015-05-01-preview').key1]"
+                },
+                "api": {
+                    "id": "[concat('subscriptions/', subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/azureblob')]"
                 }
             }
         },
