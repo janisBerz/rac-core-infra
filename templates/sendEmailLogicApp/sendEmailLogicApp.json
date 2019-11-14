@@ -59,7 +59,7 @@
                     "accessKey": "[listKeys(variables('storageAccountId'),'2015-05-01-preview').key1]"
                 },
                 "api": {
-                    "id": "[concat('subscriptions/', subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/azureblob')]"
+                    "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/',resourceGroup().location,'/managedApis/azureblob')]"
                 }
             }
         },
