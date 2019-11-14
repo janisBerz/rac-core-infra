@@ -37,7 +37,7 @@ stages:
         location: 'West Europe'
         templateLocation: 'URL of the file'
         csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-        csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+        csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
         overrideParameters: '$(armTemplateParameters)'
         deploymentMode: 'Validation'
 
@@ -61,7 +61,7 @@ stages:
                 location: 'West Europe'
                 templateLocation: 'URL of the file'
                 csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-                csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Test
@@ -82,7 +82,7 @@ stages:
                 location: 'West Europe'
                 templateLocation: 'URL of the file'
                 csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-                csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
 
 - stage: Deployment_Prod
@@ -103,5 +103,5 @@ stages:
                 location: 'West Europe'
                 templateLocation: 'URL of the file'
                 csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
-                csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
+                csmParametersFileLink: $(artifactsLocation)deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
