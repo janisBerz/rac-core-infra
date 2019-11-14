@@ -35,6 +35,7 @@ stages:
         azureSubscription: $(azureSubscriptionName)
         resourceGroupName: '$(resourceGroupName)'
         location: 'West Europe'
+        templateLocation: 'URL of the file'
         csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
         csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
         overrideParameters: '$(armTemplateParameters)'
@@ -58,6 +59,7 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
+                templateLocation: 'URL of the file'
                 csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
                 csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
@@ -78,6 +80,7 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
+                templateLocation: 'URL of the file'
                 csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
                 csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
@@ -98,6 +101,7 @@ stages:
                 azureSubscription: $(azureSubscriptionName)
                 resourceGroupName: '$(resourceGroupName)-$(Environment.Name)'
                 location: 'West Europe'
+                templateLocation: 'URL of the file'
                 csmFileLink: $(artifactsLocation)deployment/deployment.json$(artifactsLocationSasToken)
                 csmParametersFileLink: $(artifactsLocation)/templates/deployment/deployment.parameters.json$(artifactsLocationSasToken)
                 overrideParameters: '$(armTemplateParameters)'
